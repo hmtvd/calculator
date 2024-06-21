@@ -1,0 +1,147 @@
+
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Calculator</title>
+     <style>
+         body {
+             display: flex;
+             flex-direction: column;
+             justify-content: center;
+             align-items: center;
+             height: 100vh;
+             margin: 0;
+             background-color: #ffffff;
+             font-family: Arial, sans-serif;
+         }
+         .calculator {
+             background: #ffffff;
+             border-radius: 10px;
+             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+             padding: 20px;
+             width: 300px;
+             text-align: center;
+         }
+         h1 {
+             color: #333;
+         }
+         .inputfield, .feature {
+             display: flex;
+             flex-direction: column;
+             gap: 10px;
+             margin-bottom: 20px;
+         }
+         .inputfield input {
+             padding: 10px;
+             font-size: 16px;
+             border: 1px solid #ddd;
+             border-radius: 5px;
+         }
+         .feature {
+             display: flex;
+             flex-wrap: wrap;
+             justify-content: center;
+             gap: 10px;
+         }
+         .feature button {
+             flex: 1;
+             padding: 10px;
+             font-size: 16px;
+             border: none;
+             border-radius: 5px;
+             background-color: #4CAF50;
+             color: white;
+             cursor: pointer;
+             transition: background-color 0.3s ease;
+         }
+         .feature button:hover {
+             background-color: #45a049;
+         }
+         .feature button:active {
+             background-color: #a9a5a5;
+         }
+         .clear-button {
+             background-color: #a9a5a5;
+         }
+         .clear-button:hover {
+             background-color: #78e535;
+         }
+         .clear-button:active {
+             background-color: #86d32f;
+         }
+         #result {
+             margin-top: 20px;
+             font-size: 18px;
+             color: #333;
+         }
+     </style>
+ </head>
+ <body>
+     <div class="calculator">
+         <h1>Calculator</h1>
+         <div class="inputfield">
+             <input type="number" id="inputField1" placeholder="Enter a number">
+             <input type="number" id="inputField2" placeholder="Enter a number">
+             <button class="clear-button" onclick="clearinput()">Clear</button>
+         </div>
+         <div id="result"></div>
+
+         <div class="feature">
+             <button onclick="add()">add(+)</button>
+             <button onclick="sub()">sub(-)</button>
+             <button onclick="multi()">multi(*)</button>
+             <button onclick="division()">div(/)</button>
+         </div>
+         
+     </div>
+ 
+     <script>
+         function clearinput(val1) {
+             document.getElementById("inputField1").value = '';
+             document.getElementById("inputField2").value = '';
+             document.getElementById("result").value = '';
+         }
+ 
+         function add() {
+             calculate(function(a, b){
+                return a + b
+             }, 'Addition');
+         }
+ 
+         function sub() {
+             calculate((a, b) => a - b, 'Subtraction');
+         }
+ 
+         function multi() {
+             calculate((a, b) => a * b, 'Multiplication');
+         }
+         
+         function division() {
+             calculate((a, b) => {
+                 if (b == 0) {
+                     document.getElementById('result').textContent = 'Division by zero is not allowed';
+                     return null;
+                 }
+                 return (a / b).toFixed(2);
+             }, 'Division');
+         }
+ 
+         function calculate(operationFunc, operationName) {
+             const input1 = parseFloat(document.getElementById("inputField1").value);
+             const input2 = parseFloat(document.getElementById("inputField2").value);
+ 
+             if (!isNaN(input1) && !isNaN(input2)) {
+                 const result = operationFunc(input1, input2);
+                 if (result !== null) {
+                     document.getElementById('result').textContent = `${operationName} Result: ${result}`;
+                 }
+             } else {
+                 document.getElementById('result').textContent = 'Invalid input for the numbers';
+             }
+         }
+     </script>
+ </body>
+ </html>
+ 
